@@ -47,4 +47,4 @@ duplicated(paste0(ocupados$directorio,ocupados$secuencia_p,ocupados$orden)) %>% 
 base=inner_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
 
 #Descriptores
-
+ggplot(data=base, aes(x=P6020)) + geom_bar()
