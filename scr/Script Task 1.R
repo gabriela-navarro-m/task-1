@@ -29,9 +29,11 @@
   
   #Para crear una nueva base de datos donde se eligan las variables que se van a utilizar: Municipios y el resto de años. Además, se eligen desde la fila 5 porque el inicial son espacios nulos
   basecultivos= cultivos[5:nrow(cultivos),] %>% dplyr::select(.,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25) 
-  #se cambian los nombres de las columnas para poder identificarlos al hacer el pivoteo
+  
+  #Se cambian los nombres de las columnas para poder identificarlos al hacer el pivoteo
   colnames(basecultivos)=c("MUNICIPIO", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
-  #se descartan los espacios nulos
+  
+  #Se descartan los espacios nulos
   intento1= subset(x = basecultivos, subset = is.na(MUNICIPIO) == F)
   
   #Para hacer el pivoteo se usa la nueva base pues es la que tiene los datos relevantes 
@@ -41,32 +43,44 @@
 
 #3. GEIH
   
-  #Para limpiar todo y tener la configuracion inicial
-  rm(list = ls()) # limpia el entorno de R
-  pacman::p_load(here,tidyverse,reshape2) # cargar y/o instalar paquetes a usar
+  #3.1 Importar 
+
+  # Para limpiar todo y tener la configuracion inicial
+  rm(list = ls()) #Limpia el entorno de R
+  pacman::p_load(here,tidyverse,reshape2) #Cargar y/o instalar paquetes a usar
   
-  #Para importar la base de datos se usan readRDS porque están en formato R
+  # Para importar la base de datos se usan readRDS porque están en formato R
   personas=readRDS("data/input/2019/Cabecera - Caracteristicas generales (Personas).rds")
   ocupados=readRDS("data/input/2019/Cabecera - Ocupados.rds")
   
-  #Para verificar en personas que sean indentificadores unicos se usa el duplicated y table para verlo en la consola
+  # Para verificar en la base de datos "personas" aquellos individuos que sean indentificadores unicos. Se usa "duplicated" y "table" para verlo en la consola
   duplicated(personas$directorio) %>% table()
 
   duplicated(paste0(personas$directorio,personas$secuencia_p)) %>% table()
 
-  duplicated(paste0(personas$directorio,personas$secuencia_p,personas$orden)) %>% table() # No hay duplicados en X
+  duplicated(paste0(personas$directorio,personas$secuencia_p,personas$orden)) %>% table() #No hay duplicados en X
 
-  #Para verificar en ocupados que sean identificadores unicos se usa el duplicated y table para verlo en la consola
+  # Para verificar en ocupados que sean identificadores unicos. Se usa "duplicated" y "table" para verlo en la consola
   duplicated(ocupados$directorio) %>% table()
 
   duplicated(paste0(ocupados$directorio,ocupados$secuencia_p)) %>% table()
 
   duplicated(paste0(ocupados$directorio,ocupados$secuencia_p,ocupados$orden)) %>% table() # No hay duplicados en X
-  #Para unir ya las bases con identificadores de directorio, secuencia_p y orden
+  
+  #Para unir las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
   base$ocupados=ifelse(is.na(base$mes.y), 0, 1)
+  
+  #3.2 Descriptivas
+  
   #Descriptores
-  base %>% group_by(P6020) %>% summarize(promedio=mean(base$ocupados)) #Me estan saliendo iguales help
+  base %>% group_by(P6020) %>% summarise(promedio=mean(base$ocupados)) #Me estan saliendo iguales help
+  summarise(base, mediana=median(P6020), variance=var(P6020))
+  base %>% group_by(P6020) %>% summarise(base, mediana=median(base$ocupados), variance=var(base$ocupados)) #Nada que ver 
+ 
   ggplot(data=base, aes(x=P6020)) + geom_bar()
+  ggplot(data=base, aes(x=P6040)) + geom_bar()
+  ggplot(data=base, aes(x=P6440)) + geom_bar()
+  
 
 
