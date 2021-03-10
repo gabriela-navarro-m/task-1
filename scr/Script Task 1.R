@@ -11,17 +11,17 @@
   vector1=c(1:100) 
 
   # Vector 2 que contiene numeros impares del 1 al 99
-  vector2=vector1[vector1%%2==!0] # se usa vector1[] para seleccionar los numeros desde el vector 1. Luego como argumento usar vector1%%2==!0 donde %% significa sacar el residuo de una division, en este caso es que cada elemento del vector 1 se divida por 2, aquellos que tengan un residuo igual a 0 significa que son pares y los que tengan un residuo diferentes (==!) a 0 son impares
+  vector2=vector1[vector1%%2==!0] #Se usa vector1[] para seleccionar los numeros de este vector. Luego se usa el argumento vector1%%2==!0, en donde %% nos permite obtener el residuo de una division. En este caso,que cada elemento del vector 1 se divida por 2, aquellos que tengan un residuo igual a 0 significa que son pares y los que tengan un residuo diferentes (==!) a 0 son impares
 
   # Vector 3 que contiene numeros pares del vector 1 
-  vector3=vector1[-vector2] #Se usa vector1[] para seleccionar elementos de ese vector de los 100 numeros, luego se usa como argumento -vector2 donde al tener el signo negativo anterior es que devuelva todos los numeros del vector1 sin contar los del vector2
+  vector3=vector1[-vector2] #Se usa vector1[] para seleccionar elementos de ese vector, luego se usa como argumento -vector2, pues al tener el signo negativo R devuelve todos los numeros del vector1 sin contar los del vector2
 
 #2. LIMPIAR BASE DE DATOS
 
   #Para limpiar todo y tener la configuracion inicial
-  rm(list = ls()) # limpia el entorno de R
-  pacman::p_load(here,tidyverse,reshape2) # cargar y/o instalar paquetes a usar
-  library(readxl) #para traer paquete específico para leer el archivo de Excel
+  rm(list = ls()) #Limpia el entorno de R
+  pacman::p_load(here,tidyverse,reshape2) #Cargar y/o instalar paquetes requeridos
+  library(readxl) #Para traer paquete específico que leer el archivo de Excel
   
   #Para importar la base de datos se usa readxl porque el archivo es de Excel
   cultivos=read_excel("data/input/cultivos.xlsx")
