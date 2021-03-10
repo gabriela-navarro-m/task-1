@@ -115,9 +115,10 @@ ggplot(data=base, aes(x=P6020)) + geom_bar()
 
   duplicated(paste0(ocupados$directorio,ocupados$secuencia_p,ocupados$orden)) %>% table() # No hay duplicados en X
   #Para unir ya las bases con identificadores de directorio, secuencia_p y orden
-  base=inner_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
-
+  base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
+  base$ocupados=ifelse(is.na(base$mes.y), 0, 1)
   #Descriptores
+  base %>% group_by(P6020) %>% summarize(promedio=mean(base$ocupados)) #Me estan saliendo iguales help
   ggplot(data=base, aes(x=P6020)) + geom_bar()
 
->>>>>>> 2be05d2283f4c1c8ed2cea21fc8c37caadd77695
+
