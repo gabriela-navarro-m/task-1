@@ -20,7 +20,7 @@ colnames(basecultivos)=c("MUNICIPIO", "1999", "2000", "2001", "2002", "2003", "2
 intento1= subset(x = basecultivos, subset = is.na(MUNICIPIO) == F)
 #Para hacer el pivoteo se usa la nueva base pues es la que tiene los datos relevantes 
 intento2=melt(data = intento1,  id.vars=c("MUNICIPIO") , value.name = 'coca_hectarias')
-#¿Tienen que ser bajo municipios o departamentos o solo el TOTAL?
+#ES BAJO MUNICIPIOS
 
 
 #3 GEIH
