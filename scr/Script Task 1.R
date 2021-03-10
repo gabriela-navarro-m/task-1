@@ -117,6 +117,7 @@ ggplot(data=base, aes(x=P6020)) + geom_bar()
   #Para unir ya las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
   base$ocupados=ifelse(is.na(base$mes.y), 0, 1)
+  
   #Descriptores
   base %>% group_by(P6020) %>% summarize(promedio=mean(base$ocupados)) #Me estan saliendo iguales help
   ggplot(data=base, aes(x=P6020)) + geom_bar()
