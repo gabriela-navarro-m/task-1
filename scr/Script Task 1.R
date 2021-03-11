@@ -1,5 +1,4 @@
-# Elaborado por: Gabriela Navarro (201821568)
-# Colaboradores: Daniela Quintero (201821754) y Maria Alejandra Saavedra (201815221)
+# Elaborado por: Gabriela Navarro (201821568), Daniela Quintero (201821754) y Maria Alejandra Saavedra (201815221)
 # Fecha de elaboracion: 01/03/21
 # Fecha ultima modificación: 
 
@@ -81,9 +80,7 @@
   
   base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
   base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
-  summarise(base, mediana=median(P6020), variance=var(P6020))
-  base %>% group_by(P6020) %>% summarise(base, mediana=median(base$ocupados), variance=var(base$ocupados)) #Nada que ver 
- 
+  
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -91,7 +88,20 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
+<<<<<<< HEAD
 
+=======
+  
+  #Intento para categórica
+  library(ggplot2)
+  g1 = ggplot(data = base, mapping = aes(x=ocupados))
+  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")
+  g1+ geom_bar(data=base, aes(x=ocupados))
+  g1+ geom_bar()+ labs(title = "o vs d", x= "Ocupados", y= "frecuencia")
+  
+  # Sexo P6020
+  
+>>>>>>> f1e76e03918f073eec26ba8cb73157f0382a48cc
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
 
