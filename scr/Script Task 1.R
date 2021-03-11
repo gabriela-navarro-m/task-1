@@ -10,7 +10,7 @@
   vector1=c(1:100) 
 
   # Vector 2 que contiene numeros impares del 1 al 99
-  vector2=vector1[vector1%%2==!0] #Se usa vector1[] para seleccionar los numeros de este vector. Luego se usa el argumento vector1%%2==!0, en donde %% nos permite obtener el residuo de una division. En este caso,que cada elemento del vector 1 se divida por 2, aquellos que tengan un residuo igual a 0 significa que son pares y los que tengan un residuo diferentes (==!) a 0 son impares
+  vector2=seq(from=1, to=99, by=2 ) #Se establece una secuencia donde empieza por el numero 1 y termina en el 99 con saltos de dos numeros para tener solo impares
 
   # Vector 3 que contiene numeros pares del vector 1 
   vector3=vector1[-vector2] #Se usa vector1[] para seleccionar elementos de ese vector, luego se usa como argumento -vector2, pues al tener el signo negativo R devuelve todos los numeros del vector1 sin contar los del vector2
