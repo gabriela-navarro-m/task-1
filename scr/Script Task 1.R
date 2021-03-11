@@ -20,7 +20,6 @@
   #Para limpiar todo y tener la configuracion inicial
   rm(list = ls()) #Limpia el entorno de R
   pacman::p_load(here,tidyverse,reshape2) #Cargar y/o instalar paquetes requeridos
-  library(readxl) #Para traer paquete específico que leer el archivo de Excel
   
   #Para importar la base de datos se usa read_xlsx porque el archivo es de Excel
   cultivos=read_xlsx("data/input/cultivos.xlsx")
