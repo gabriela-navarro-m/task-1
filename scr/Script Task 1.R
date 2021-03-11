@@ -45,6 +45,9 @@
   #Para que las columnas tengan los nombres correctos en la base final
   colnames(basecultivos)[2] = "Agno"
   view (basecultivos)
+  
+  #Para exportarla a output
+  saveRDS(object = basecultivos, file = "data/output/basecultivos.rds")
 
 #3. GEIH
   
