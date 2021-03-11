@@ -23,23 +23,29 @@
   pacman::p_load(here,tidyverse,reshape2) #Cargar y/o instalar paquetes requeridos
   library(readxl) #Para traer paquete específico que leer el archivo de Excel
   
-  #Para importar la base de datos se usa readxl porque el archivo es de Excel
-  cultivos=read_excel("data/input/cultivos.xlsx")
+  #Para importar la base de datos se usa read_xlsx porque el archivo es de Excel
+  cultivos=read_xlsx("data/input/cultivos.xlsx")
   view(cultivos) #para ver la base de datos 
   
   #Para crear una nueva base de datos donde se eligan las variables que se van a utilizar: Municipios y el resto de años. Además, se eligen desde la fila 5 porque el inicial son espacios nulos
-  basecultivos= cultivos[5:nrow(cultivos),] %>% dplyr::select(.,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25) 
+  basecultivos = cultivos[5:nrow(cultivos),] %>% dplyr::select(.,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25) 
+  view (basecultivos)
   
   #Se cambian los nombres de las columnas para poder identificarlos al hacer el pivoteo
-  colnames(basecultivos)=c("MUNICIPIO", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
+  colnames(basecultivos) = c("MUNICIPIO", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019")
+  view (basecultivos)
   
   #Se descartan los espacios nulos
-  intento1= subset(x = basecultivos, subset = is.na(MUNICIPIO) == F)
+  basecultivos = subset(x = basecultivos, subset = is.na(MUNICIPIO) == F)
+  view (basecultivos)
   
-  #Para hacer el pivoteo se usa la nueva base pues es la que tiene los datos relevantes 
-  intento2=melt(data = intento1,  id.vars=c("MUNICIPIO") , value.name = 'coca_hectarias')
-  #¿Tienen que ser bajo municipios o departamentos o solo el TOTAL?
+  #Ya se puede hacer pivoteo al tener los datos relevantes 
+  basecultivos = melt(data = basecultivos,  id.vars=c("MUNICIPIO") , value.name = 'coca_hectarias')
+  view (basecultivos)
 
+  #Para que las columnas tengan los nombres correctos en la base final
+  colnames(basecultivos)[2] = "Agno"
+  view (basecultivos)
 
 #3. GEIH
   
@@ -85,7 +91,7 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
-  
+
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
 
