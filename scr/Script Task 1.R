@@ -79,6 +79,9 @@
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
   base$ocupados=ifelse(is.na(base$mes.y), 0, 1)
   
+  #para exportar la base de datos final que queda antes de hacer las descriptivas
+  saveRDS(object=base, file = "data/output/baseocupados.rds")
+  
   #3.2 Descriptivas
   
   base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
