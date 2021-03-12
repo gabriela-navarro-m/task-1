@@ -105,6 +105,20 @@
   base %>% group_by(area.x) %>% summarise(var=var(ocupados))
 
   #Realizamos los graficos pertinentes para cada caso  
+  
+  g1 = ggplot(data = base, mapping = aes(x=ocupados))
+  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")+labs(title = "Ocupados", x= "Cantidad de personas ocupadas")
+  
+  ggplot(data=base, aes(x=P6040)) + geom_bar()
+  base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
+  
+  ggplot(data=base, aes(x=P6430)) + geom_bar()
+  
+  g2= ggplot(data = base, mapping = aes(x=area.x))
+  g2 + geom_histogram(binwidth = 0.5, fill="blue", colour="white") + labs(title = "Areas", x= "Personas por areas") #Esta no esta sirviendo 
+  
+  
+  ######### 
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -114,13 +128,9 @@
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
   
   #Intento para categórica
-  library(ggplot2)
-  g1 = ggplot(data = base, mapping = aes(x=ocupados))
-  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")
-  g1+ geom_bar(data=base, aes(x=ocupados))
-  g1+ geom_bar()+ labs(title = "o vs d", x= "Ocupados", y= "frecuencia")
-  
-  
+
+
+
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
 
