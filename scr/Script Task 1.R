@@ -83,9 +83,8 @@
   
   #3.2 Descriptivas
   
-  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
-  base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
-  
+  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), total=sum(ocupados))
+
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -93,6 +92,7 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
+  
 <<<<<<< HEAD
 
 =======
