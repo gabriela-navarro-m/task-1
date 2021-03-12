@@ -74,17 +74,32 @@
 
   duplicated(paste0(ocupados$directorio,ocupados$secuencia_p,ocupados$orden)) %>% table() # No hay duplicados en X
   
-  #Para unir las bases con identificadores de directorio, secuencia_p y orden
+  # Para unir las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
-  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados porque en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
+  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados. Esto se debe a que en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
   
-  #para exportar la base de datos final que queda antes de hacer las descriptivas
+  # Para exportar la base de datos final que queda antes de hacer las descriptivas
   saveRDS(object=base, file = "data/output/baseocupados.rds")
   
   #3.2 Descriptivas
   
+  # Estadísticas descriptivas número de ocupados con diferentes variables de agrupacion 
+  
   base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
   base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6020) %>% summarise(var=var(ocupados))
+                                    
+  base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(P6430) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6430) %>% summarise(var=var(ocupados))
+  
+  
+  
+  
+  #Oci es población ocupada 
+  #Años P6040
+  #Sexo P6020
+  #Urbano/Rural 
   
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
@@ -93,9 +108,6 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
-<<<<<<< HEAD
-
-=======
   
   #Intento para categórica
   library(ggplot2)
@@ -106,7 +118,6 @@
   
   # Sexo P6020
   
->>>>>>> f1e76e03918f073eec26ba8cb73157f0382a48cc
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
 
