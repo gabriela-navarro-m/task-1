@@ -83,7 +83,9 @@
   
   #3.2 Descriptivas
   
-  # Estadísticas descriptivas número de ocupados con diferentes variables de agrupacion 
+  summary(base)
+  
+  # Estadísticas descriptivas número de ocupados y desocupados con diferentes variables de agrupacion 
   
   base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
   base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
@@ -93,14 +95,16 @@
   base %>% group_by(P6430) %>% summarise(num=sum(ocupados))
   base %>% group_by(P6430) %>% summarise(var=var(ocupados))
   
+  base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(P6040) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6040) %>% summarise(var=var(ocupados))
   
   
-  
-  #Oci es población ocupada 
-  #Años P6040
-  #Sexo P6020
-  #Urbano/Rural 
-  
+  base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(area.x) %>% summarise(num=sum(ocupados))
+  base %>% group_by(area.x) %>% summarise(var=var(ocupados))
+
+  #Realizamos los graficos pertinentes para cada caso  
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -116,7 +120,6 @@
   g1+ geom_bar(data=base, aes(x=ocupados))
   g1+ geom_bar()+ labs(title = "o vs d", x= "Ocupados", y= "frecuencia")
   
-  # Sexo P6020
   
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
