@@ -104,29 +104,34 @@
   
     #Gráfica de ocupados 
     library(ggplot2)
-    g1 = ggplot(data = base, aes(x=ocupados), fill=as.factor(cyl))
-    g1 + geom_bar()+scale_fill_manual(values=c("red","green")+theme(legend.position="none")
-    
-    theme(legend.position = "none")
-    g1=ggplot(data=base, mapping = aes(x= ocupados, fill=as.factor(cyl)))
-    g1 + geom_bar() + scale_fill_hue(c=40) + theme(legend.position="none")
-
-    
+    g1=ggplot(data=base, aes(x= as.factor(ocupados), fill=as.factor(ocupados)))
+    g12=g1 + geom_bar() + scale_fill_hue(c=40) + theme(legend.position="none")+labs(title="Ocupados y Desocupados", subtitle = "2019", x="Desocupados vs. Ocupados")
+    g12
+      
     #Gráfica edad 
-    ggplot(data=base, aes(x=P6040)) + geom_bar()
-    base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
+    g21=ggplot(data=base, aes(x=P6040)) + geom_bar()
+    g21
+    g22=base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
+    g22
   
-    #Gráfica para dos categóricas: genero y ocupados 
-    gyo = base %>% subset(ocupados = 1 ) %>% ggplot(data = ., aes(x=ocupados, y=P6020)) + geom_bar()
-    gyo
-    gyo2 = base %>% subset(ocupados = 0) %>% ggplot(data = ., aes(x=P6020)) + geom_bar()
-    gyo2
+    #Grafica para ocupados por genero 
+    g3=base %>% group_by(P6020) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6020, y=total))+
+      geom_bar(stat = "identity", fill="#f68060", alpha=.6, width = 0.8)+
+      coord_flip()+xlab('sexo')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+    g3
+
+    #Grafica para ocupados por edad
+    g4=base %>% group_by(P6040) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6040, y=total))+
+      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
+      xlab('Edad')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+    g4
     
-    colombia <- gini %>% subset(country == "Colombia") %>% 
-      ggplot(data = .,aes(x=year, y=gini)) + geom_line(color="blue") + geom_point(color='black') +
-      theme_bw() + theme_propio  + etiquetas
+    #Grafica ocupados por departamento 
     
     
+    
+   
+  ##########
   ggplot(data=base, aes(x=P6430)) + geom_bar()
   
   g2= ggplot(data = base, mapping = aes(x=area.x))
