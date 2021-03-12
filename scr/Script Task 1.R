@@ -91,22 +91,13 @@
   
   # Estadísticas descriptivas número de ocupados y desocupados con diferentes variables de agrupacion 
   
-  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
-  base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
-  base %>% group_by(P6020) %>% summarise(var=var(ocupados))
-                                    
-  base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados))
-  base %>% group_by(P6430) %>% summarise(num=sum(ocupados))
-  base %>% group_by(P6430) %>% summarise(var=var(ocupados))
-  
-  base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados))
-  base %>% group_by(P6040) %>% summarise(num=sum(ocupados))
-  base %>% group_by(P6040) %>% summarise(var=var(ocupados))
-  
-  
-  base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados))
-  base %>% group_by(area.x) %>% summarise(num=sum(ocupados))
-  base %>% group_by(area.x) %>% summarise(var=var(ocupados))
+  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados)) 
+
+  base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+
+  base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+
+  base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
 
   #Realizamos los graficos pertinentes para cada caso  
   
@@ -145,5 +136,86 @@
 
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
+  
+  #3.2 Descriptivas
+  
+  # El numero de ocupados promedio agrupado por genero
+  base %>% group_by(P6020) %>% summarise(promedio = mean(ocupados)) 
+  
+  # El numero total de ocupados agrupados por genero
+  base %>% group_by(P6020) %>% summarise(num = sum(ocupados))
+  
+  # Muestra las estadisticas descriptivas de la base de datos
+  # Tomando a la media y la varianza del genero
+  summarise(base, mediana = median(P6020), variance = var(P6020))
+  base %>% group_by(P6020) %>% summarise(base, mediana = median(base$ocupados), variance = var(base$ocupados)) #Nada que ver 
+  
+  # El promedio de los ingresos laborales promedio por genero
+  base %>% group_by(P6020) %>% summarise(num = mean(P6750))
+  
+  # El ingreso total de las personas desocupadas
+  base %>% group_by(ocupados == 1) %>% summarise(num = mean(P6750))
+  
+  # Ingreso promedio, minimo y maximo, por genero y desocupados
+  base %>% group_by(ocupados, P6020)%>%
+    summarise (ingreso = mean(P6750), min_ingreso = min(P6750), max_ingreso = max(P6750))
+  
+  # Graficas
+  
+  # GRAFICAS DE BARRAS #
+  
+  # Grafica de barras de que muestra la cantidad de desocupados y ocupados 
+  grafica_barra1 <- ggplot() + geom_bar(data = base, aes(x = ocupados))
+  
+  # Crear variables de mujeres y hombres
+  hombres = subset(base, P6020 == 1)
+  mujeres = subset(base, P6020 == 2)
+  
+  # Grafica de barras de que muestra la cantidad de desocupados y ocupados por genero
+  grafica_barra2 <- ggplot() + geom_bar(data = mujeres, aes(x = ocupados))
+  grafica_barra3 <- ggplot() + geom_bar(data = hombres, aes(x = ocupados))
+  
+  subset(base, P6020 == 1) %>% ggplot() + geom_bar(data = base, aes(x = ocupados)) 
+  subset(base, P6020 == 2) %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
+  
+  group_by(base,P6020 == 1) %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
+  
+  grafica_barra4 <- hombres %>% ggplot() + geom_bar(data = base, aes(x = ocupados)) 
+  grafica_barra5 <- mujeres %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
+  
+  # Grafica de barras de que muestra la cantidad de desocupados y ocupados por urbano rural
+  grafica_barra6 <- ggplot() + geom_bar(data = base, aes(x = ocupados))
+  
+  # HISTOGRAMA #
+  ingresos = subset(base, is.na(P6750) == F)
+  
+  # Histograma que muestra la distribucion de ingresos
+  grafica_histograma1 <- ggplot() + geom_histogram(data = base, aes(x = P6750))
+  
+  # Histograma que muestra la distribucion de ingresos por genero
+  grafica_histograma2 <- ggplot() + geom_histogram(data = hombres, aes(x = P6750)) + xlab("Ingresos de Hombres") 
+  grafica_histograma3 <-ggplot() + geom_histogram(data = mujeres, aes(x = P6750)) + xlab("Ingresos de Mujeres") 
+  
+  # Histograma muestra la distribucion de las edades
+  grafica_histograma4 <- ggplot(data=base, aes(x = P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
+  
+  # Histograma muestra la distribucion de los tipos de contratos
+  grafica_histograma5 <- ggplot(data=base, aes(x = P6440)) + geom_bar()
+  
+  # Para exportar graficas como JPEG se utiliza 
+  # Graficas de barra
+  ggsave(plot = grafica_barra1, file = "views/grafica_barra1.jpeg")
+  ggsave(plot = grafica_barra2, file = "views/grafica_barra2.jpeg")
+  ggsave(plot = grafica_barra3, file = "views/grafica_barra3.jpeg")
+  ggsave(plot = grafica_barra4, file = "views/grafica_barra4.jpeg")
+  ggsave(plot = grafica_barra5, file = "views/grafica_barra5.jpeg")
+  ggsave(plot = grafica_barra6, file = "views/grafica_barra6.jpeg")
+  ggsave(plot = grafica_barra7, file = "views/grafica_barra7.jpeg")
+  # Histogramas 
+  ggsave(plot = grafica_histograma1, file = "views/grafica_histograma1.jpeg")
+  ggsave(plot = grafica_histograma2, file = "views/grafica_histograma2.jpeg")
+  ggsave(plot = grafica_histograma3, file = "views/grafica_histograma3.jpeg")
+  ggsave(plot = grafica_histograma4, file = "views/grafica_histograma4.jpeg")
+  ggsave(plot = grafica_histograma5, file = "views/grafica_histograma5.jpeg")
 
 
