@@ -83,23 +83,24 @@
   
   #3.2 Descriptivas
   
-<<<<<<< HEAD
-  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), total=sum(ocupados))
-
-=======
   summary(base)
   
   # Estadísticas descriptivas número de ocupados y desocupados con diferentes variables de agrupacion 
   
-  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados)) 
+    #Agrupado por genero
+    base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), var=var(ocupados), total=sum(ocupados))
 
-  base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+    #Agrupado por tipo de contrato  
+    base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), total=sum(ocupados))
 
-  base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+    #Agrupado por edad 
+    base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
 
-  base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+    #Agrupado por urbano/rural
+    base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados), total=sum(ocupados))
+    
 
-  #Realizamos los graficos pertinentes para cada caso  
+  #Realizamos los graficos adecuadas para cada caso  
   
   g1 = ggplot(data = base, mapping = aes(x=ocupados))
   g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")+labs(title = "Ocupados", x= "Cantidad de personas ocupadas")
@@ -114,7 +115,6 @@
   
   
   ######### 
->>>>>>> 21d7411b3f30ab10720d1072feee7adcb50653ef
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -122,13 +122,7 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
-<<<<<<< HEAD
-  
-<<<<<<< HEAD
 
-=======
-=======
->>>>>>> 21d7411b3f30ab10720d1072feee7adcb50653ef
   
   #Intento para categórica
 
@@ -137,19 +131,11 @@
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
   
-  #3.2 Descriptivas
   
-  # El numero de ocupados promedio agrupado por genero
-  base %>% group_by(P6020) %>% summarise(promedio = mean(ocupados)) 
   
-  # El numero total de ocupados agrupados por genero
-  base %>% group_by(P6020) %>% summarise(num = sum(ocupados))
-  
-  # Muestra las estadisticas descriptivas de la base de datos
   # Tomando a la media y la varianza del genero
   summarise(base, mediana = median(P6020), variance = var(P6020))
-  base %>% group_by(P6020) %>% summarise(base, mediana = median(base$ocupados), variance = var(base$ocupados)) #Nada que ver 
-  
+
   # El promedio de los ingresos laborales promedio por genero
   base %>% group_by(P6020) %>% summarise(num = mean(P6750))
   
