@@ -100,14 +100,33 @@
     base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados), total=sum(ocupados))
     
 
-  #Realizamos los graficos adecuadas para cada caso  
+  # Realizamos los graficos adecuadas para cada caso (con ayuda de: https://www.data-to-viz.com) y las exportamos
   
-  g1 = ggplot(data = base, mapping = aes(x=ocupados))
-  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")+labs(title = "Ocupados", x= "Cantidad de personas ocupadas")
+    #Gráfica de ocupados 
+    library(ggplot2)
+    g1 = ggplot(data = base, aes(x=ocupados), fill=as.factor(cyl))
+    g1 + geom_bar()+scale_fill_manual(values=c("red","green")+theme(legend.position="none")
+    
+    theme(legend.position = "none")
+    g1=ggplot(data=base, mapping = aes(x= ocupados, fill=as.factor(cyl)))
+    g1 + geom_bar() + scale_fill_hue(c=40) + theme(legend.position="none")
+
+    
+    #Gráfica edad 
+    ggplot(data=base, aes(x=P6040)) + geom_bar()
+    base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
   
-  ggplot(data=base, aes(x=P6040)) + geom_bar()
-  base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
-  
+    #Gráfica para dos categóricas: genero y ocupados 
+    gyo = base %>% subset(ocupados = 1 ) %>% ggplot(data = ., aes(x=ocupados, y=P6020)) + geom_bar()
+    gyo
+    gyo2 = base %>% subset(ocupados = 0) %>% ggplot(data = ., aes(x=P6020)) + geom_bar()
+    gyo2
+    
+    colombia <- gini %>% subset(country == "Colombia") %>% 
+      ggplot(data = .,aes(x=year, y=gini)) + geom_line(color="blue") + geom_point(color='black') +
+      theme_bw() + theme_propio  + etiquetas
+    
+    
   ggplot(data=base, aes(x=P6430)) + geom_bar()
   
   g2= ggplot(data = base, mapping = aes(x=area.x))
