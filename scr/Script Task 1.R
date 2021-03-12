@@ -76,7 +76,7 @@
   
   #Para unir las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
-  base$ocupados=ifelse(is.na(base$mes.y), 0, 1)
+  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados porque en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
   
   #para exportar la base de datos final que queda antes de hacer las descriptivas
   saveRDS(object=base, file = "data/output/baseocupados.rds")
