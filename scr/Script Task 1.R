@@ -74,17 +74,56 @@
 
   duplicated(paste0(ocupados$directorio,ocupados$secuencia_p,ocupados$orden)) %>% table() # No hay duplicados en X
   
-  #Para unir las bases con identificadores de directorio, secuencia_p y orden
+  # Para unir las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
-  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados porque en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
+  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados. Esto se debe a que en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
   
-  #para exportar la base de datos final que queda antes de hacer las descriptivas
+  # Para exportar la base de datos final que queda antes de hacer las descriptivas
   saveRDS(object=base, file = "data/output/baseocupados.rds")
   
   #3.2 Descriptivas
   
+<<<<<<< HEAD
   base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), total=sum(ocupados))
 
+=======
+  summary(base)
+  
+  # Estadísticas descriptivas número de ocupados y desocupados con diferentes variables de agrupacion 
+  
+  base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados)) 
+  base %>% group_by(P6020) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6020) %>% summarise(var=var(ocupados))
+                                    
+  base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(P6430) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6430) %>% summarise(var=var(ocupados))
+  
+  base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(P6040) %>% summarise(num=sum(ocupados))
+  base %>% group_by(P6040) %>% summarise(var=var(ocupados))
+  
+  
+  base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados))
+  base %>% group_by(area.x) %>% summarise(num=sum(ocupados))
+  base %>% group_by(area.x) %>% summarise(var=var(ocupados))
+
+  #Realizamos los graficos pertinentes para cada caso  
+  
+  g1 = ggplot(data = base, mapping = aes(x=ocupados))
+  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")+labs(title = "Ocupados", x= "Cantidad de personas ocupadas")
+  
+  ggplot(data=base, aes(x=P6040)) + geom_bar()
+  base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
+  
+  ggplot(data=base, aes(x=P6430)) + geom_bar()
+  
+  g2= ggplot(data = base, mapping = aes(x=area.x))
+  g2 + geom_histogram(binwidth = 0.5, fill="blue", colour="white") + labs(title = "Areas", x= "Personas por areas") #Esta no esta sirviendo 
+  
+  
+  ######### 
+>>>>>>> 21d7411b3f30ab10720d1072feee7adcb50653ef
   ggplot() + geom_bar(data=base, aes(x=ocupados))
   h=subset(base, P6020==1)
   m=subset(base, P6020==2)
@@ -92,21 +131,18 @@
   ggplot() + geom_bar(data=h, aes(x=ocupados))
   subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
   subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
+<<<<<<< HEAD
   
 <<<<<<< HEAD
 
 =======
+=======
+>>>>>>> 21d7411b3f30ab10720d1072feee7adcb50653ef
   
   #Intento para categórica
-  library(ggplot2)
-  g1 = ggplot(data = base, mapping = aes(x=ocupados))
-  g1 + geom_histogram(binwidth = 0.5, fill="blue", colour="white")
-  g1+ geom_bar(data=base, aes(x=ocupados))
-  g1+ geom_bar()+ labs(title = "o vs d", x= "Ocupados", y= "frecuencia")
-  
-  # Sexo P6020
-  
->>>>>>> f1e76e03918f073eec26ba8cb73157f0382a48cc
+
+
+
   ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
   ggplot(data=base, aes(x=P6440)) + geom_bar()
 
