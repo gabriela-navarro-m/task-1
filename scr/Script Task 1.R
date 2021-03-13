@@ -76,7 +76,7 @@
   
   # Para unir las bases con identificadores de directorio, secuencia_p y orden
   base=full_join(x=personas, y=ocupados, by=c("directorio", "secuencia_p", "orden"))
-  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados. Esto se debe a que en la union los que no estan ocupados tienen NA cuando deberia ser 0 para mostrar que son desocupados
+  base$ocupados=ifelse(is.na(base$mes.y), 0, 1) #Para crear una nueva variable de ocupados. Esto se debe a que en la union los que no estan ocupados tienen NA
   
   # Para exportar la base de datos final que queda antes de hacer las descriptivas
   saveRDS(object=base, file = "data/output/baseocupados.rds")
@@ -99,6 +99,20 @@
     #Agrupado por urbano/rural
     base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados), total=sum(ocupados))
     
+  # Estadísticas descriptivas ingresos laborales promedio con diferentes variables de agrupacion 
+    descript = subset(base,is.na(P6750) == F)
+    
+    #  #Agrupado por genero
+    descript %>% group_by(P6020) %>% summarise(promedio=mean(P6750), desvest=sd(P6750), var=var(P6750), total=sum(P6750))
+    
+    #Agrupado por tipo de contrato  
+    descript %>% group_by(P6430) %>% summarise(promedio=mean(P6750), num=sum(P6750), total=sum(P6750))
+    
+    #Agrupado por edad 
+    descript %>% group_by(P6040) %>% summarise(promedio=mean(P6750), num=sum(P6750), var=var(P6750))
+    
+    #Agrupado por urbano/rural
+    descript %>% group_by(area.x) %>% summarise(promedio=mean(P6750), num=sum(P6750), var=var(P6750), total=sum(P6750))
 
   # Realizamos los graficos adecuadas para cada caso (con ayuda de: https://www.data-to-viz.com) y las exportamos
   
@@ -126,9 +140,17 @@
       xlab('Edad')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g4
     
+    #Grafica ocupados por tipo de contrato 
+    g5=base %>% group_by(P6430) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6430, y=total))+
+      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
+      xlab('Edad')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+    g5
+    
     #Grafica ocupados por departamento 
+    base %>% group_by(area.x) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=area.x, y=total))+
+      geom_bar()
     
-    
+   
     
    
   ##########
