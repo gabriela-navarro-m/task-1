@@ -130,6 +130,7 @@
     g22=base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
     g22
   
+    # GRAFICA PARA OCUPADOS CON DIFERENTES VARIABLES DE AGRUPACION
     #Grafica para ocupados por genero 
     g3=base %>% group_by(P6020) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6020, y=total))+
       geom_bar(stat = "identity", fill="#f68060", alpha=.6, width = 0.8)+
@@ -147,37 +148,64 @@
       geom_bar(stat = "identity", fill="#f70060", alpha=.6, width = 0.8)+
       xlab('Tipo de Contrato')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g5
-    
-    g51=descript2 %>% group_by(P6500) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6500, y=total))+
-      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
-      xlab('Tipo de Contrato')+ylab('Cantidad de Personas ocupadas')+theme_bw()
-    g51
-    
-    descript2 %>% group_by(P6500) %>% ggplot(data=., aes(x=ocupados))+geom_histogram()
-    
-    g51=descript2 %>% group_by(P6500) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6500))+
-      geom_histogram()
-    
-    #Grafica ocupados por departamento 
-    base %>% group_by(dpto.y) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=dpto.y))+
-      geom_histogram()
-    g6=base %>% group_by(area.x) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=area.x, y=total))+
-      geom_bar(stat = "identity", fill="#f70060", alpha=.6, width = 0.8)+
-      xlab('Area de Colombia')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+  
+    #Grafica ocupados por area
+    g6= base %>% group_by(area.x) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
+      geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8)+
+      xlab('Tipo de Contrato')
     g6
     
-   
+    g61= base %>% group_by(area.x) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
+      geom_histogram(binwidth = 30, fill="#69b3a2", color="#e9ecef", alpha=0.9)+
+      xlab('Tipo de Contrato')
+    g61
+    
+    g62=base %>% group_by(area.y) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
+      geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8)+
+      xlab('Tipo de Contrato')
+    g62
+    
+    g63=base %>% group_by(area.y) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
+      geom_histogram(binwidth = 30, fill="#69b3a2", color="#e9ecef", alpha=0.9)+
+      xlab('Tipo de Contrato')
+    g63
+  
+    # GRAFICA PARA INGRESO PROMEDIO CON DIFERENTES VARIABLES DE AGRUPACION
     #Grafica para ingresos promedio por sexo
-    g7 = descript %>% group_by(P6020) %>% summarise(promedio = mean(P6750)) %>% ggplot(data = ., aes(x=P6750, y=promedio))+
-      geom_bar(stat = "identity", fill="#f68060", alpha=.6, width = 0.8)+
-      coord_flip()+xlab('Sexo')+ylab('Ingreso Promedio')+theme_bw()                                           
+    descript %>% group_by(P6020) %>% summarise(promedio = mean(P6750), desvest= sd(P6750), var = var(P6750), min = min(P6750), max = max(P6750))
+    
+    g7= descript %>% group_by(P6020) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=P6020, y=promedio))+
+      geom_bar(stat = "identity", fill="#f68020", alpha=.6, width = 0.8)+
+      coord_flip()+xlab('sexo')+ylab('Ingreso Promedio')+theme_bw()
     g7
   
     #Grafica para ingreso promedio por edad
-    g8 = descript %>% group_by(P6040) %>% summarize(promedio=mean(P6750)) %>% ggplot(data=descript2, aes_(P6750, promedio))+
-      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
-      xlab('Edad')+ylab('Ingreso Promedio')+theme_bw()
+    g8 = descript %>% group_by(P6040) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=P6040, y=promedio))+
+      geom_bar(stat = "identity", fill="#f68050", alpha=.6, width = 0.8)+
+      coord_flip()+xlab('Edad')+ylab('Ingreso Promedio')+theme_bw()
     g8
+    
+    #Grafica para ingreso promedio por tipo de contrato 
+    g9= descript %>% group_by(P6430) %>% summarize(promedio=mean(P6750)) %>% ggplot(data=., aes(x=P6430, y=promedio))+
+      geom_bar(stat = "identity", fill="#f10000", alpha=.6, width = 0.8)+
+      xlab('Tipo de Contrato')+ylab('Ingreso promedio')+theme_bw()
+    g9 #Para el tipo de contrato 4, 5 y 9
+    
+    g91= descript2 %>% group_by(P6430) %>% summarize(promedio=mean(P6500)) %>% ggplot(data=., aes(x=P6430, y=promedio))+
+      geom_bar(stat = "identity", fill="#f58029", alpha=.6, width = 0.8)+
+      xlab('Tipo de Contrato')+ylab('Ingreso promedio')+theme_bw()
+    g91 #Para el tipo de contrato 1, 2, 3 y 8
+    
+    #Grafica para ingreso promedio por area
+    g1.0= descript %>% group_by(area.x) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=promedio))+
+      geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8) + xlab('Ingreso promedio')
+    g1.0
+    
+    g1.2=descript %>% group_by(area.y) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=promedio))+
+      geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8) + xlab('Ingreso promedio')
+    g1.2
+  
+   
     
 ##########################################################################################################################
   
@@ -220,15 +248,18 @@
   
   # Grafica de barras de que muestra la cantidad de desocupados y ocupados por urbano rural
   grafica_barra6 <- ggplot() + geom_bar(data = base, aes(x = ocupados))
+  grafica_barra6
   
   # HISTOGRAMA #
   ingresos = subset(base, is.na(P6750) == F)
   
   # Histograma que muestra la distribucion de ingresos
   grafica_histograma1 <- ggplot() + geom_histogram(data = base, aes(x = P6750))
+  grafica_histograma1
   
   # Histograma que muestra la distribucion de ingresos por genero
   grafica_histograma2 <- ggplot() + geom_histogram(data = hombres, aes(x = P6750)) + xlab("Ingresos de Hombres") 
+  grafica_histograma2
   grafica_histograma3 <-ggplot() + geom_histogram(data = mujeres, aes(x = P6750)) + xlab("Ingresos de Mujeres") 
   
   # Histograma muestra la distribucion de las edades
