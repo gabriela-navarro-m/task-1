@@ -91,28 +91,30 @@
     base %>% group_by(P6020) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), var=var(ocupados), total=sum(ocupados))
 
     #Agrupado por tipo de contrato  
-    base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), total=sum(ocupados))
+    base %>% group_by(P6430) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), var=var(ocupados), total=sum(ocupados))
 
     #Agrupado por edad 
-    base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados))
+    base %>% group_by(P6040) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), var=var(ocupados), total=sum(ocupados))
 
     #Agrupado por urbano/rural
-    base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), num=sum(ocupados), var=var(ocupados), total=sum(ocupados))
+    base %>% group_by(area.x) %>% summarise(promedio=mean(ocupados), desvest=sd(ocupados), var=var(ocupados), total=sum(ocupados))
     
   # Estadísticas descriptivas ingresos laborales promedio con diferentes variables de agrupacion 
-    descript = subset(base,is.na(P6750) == F)
+    descript = subset(base,is.na(base$P6750) == F) #para sacar los NA de honorarios netos 
+    descript2= subset(base, is.na(base$P6500) == F) #Para sacar los NA de ingresos mensuales - Al usar ambas variables de ingreso se consiguen los datos de todos los tipos de contratos
     
     #  #Agrupado por genero
-    descript %>% group_by(P6020) %>% summarise(promedio=mean(P6750), desvest=sd(P6750), var=var(P6750), total=sum(P6750))
+    descript %>% group_by(P6020) %>% summarise(promedio = mean(P6750), desvest= sd(P6750), var = var(P6750), min = min(P6750), max = max(P6750))
     
     #Agrupado por tipo de contrato  
-    descript %>% group_by(P6430) %>% summarise(promedio=mean(P6750), num=sum(P6750), total=sum(P6750))
+    descript %>% group_by(P6430) %>% summarise(promedio = mean(P6750), desvest= sd(P6750), var = var(P6750), min = min(P6750), max = max(P6750))
+    descript2 %>% group_by(P6430) %>% summarise(promedio = mean(P6500), desvest= sd(P6500), var = var(P6500), min = min(P6500), max = max(P6500))
     
     #Agrupado por edad 
-    descript %>% group_by(P6040) %>% summarise(promedio=mean(P6750), num=sum(P6750), var=var(P6750))
+    descript %>% group_by(P6040) %>% summarise(promedio = mean(P6750), desvest= sd(P6750), var = var(P6750), min = min(P6750), max = max(P6750))
     
     #Agrupado por urbano/rural
-    descript %>% group_by(area.x) %>% summarise(promedio=mean(P6750), num=sum(P6750), var=var(P6750), total=sum(P6750))
+    descript %>% group_by(area.x) %>% summarise(promedio = mean(P6750), desvest= sd(P6750), var = var(P6750), min = min(P6750), max = max(P6750))
 
   # Realizamos los graficos adecuadas para cada caso (con ayuda de: https://www.data-to-viz.com) y las exportamos
   
