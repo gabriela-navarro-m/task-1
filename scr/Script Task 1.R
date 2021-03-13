@@ -144,41 +144,42 @@
     
     #Grafica ocupados por tipo de contrato 
     g5=base %>% group_by(P6430) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6430, y=total))+
-      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
-      xlab('Edad')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+      geom_bar(stat = "identity", fill="#f70060", alpha=.6, width = 0.8)+
+      xlab('Tipo de Contrato')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g5
     
+    g51=descript2 %>% group_by(P6500) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6500, y=total))+
+      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
+      xlab('Tipo de Contrato')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+    g51
+    
+    descript2 %>% group_by(P6500) %>% ggplot(data=., aes(x=ocupados))+geom_histogram()
+    
+    g51=descript2 %>% group_by(P6500) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=P6500))+
+      geom_histogram()
+    
     #Grafica ocupados por departamento 
-    base %>% group_by(area.x) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=area.x, y=total))+
-      geom_bar()
+    base %>% group_by(dpto.y) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=dpto.y))+
+      geom_histogram()
+    g6=base %>% group_by(area.x) %>% summarize(total=sum(ocupados)) %>% ggplot(data=., aes(x=area.x, y=total))+
+      geom_bar(stat = "identity", fill="#f70060", alpha=.6, width = 0.8)+
+      xlab('Area de Colombia')+ylab('Cantidad de Personas ocupadas')+theme_bw()
+    g6
     
    
+    #Grafica para ingresos promedio por sexo
+    g7 = descript %>% group_by(P6020) %>% summarise(promedio = mean(P6750)) %>% ggplot(data = ., aes(x=P6750, y=promedio))+
+      geom_bar(stat = "identity", fill="#f68060", alpha=.6, width = 0.8)+
+      coord_flip()+xlab('Sexo')+ylab('Ingreso Promedio')+theme_bw()                                           
+    g7
+  
+    #Grafica para ingreso promedio por edad
+    g8 = descript %>% group_by(P6040) %>% summarize(promedio=mean(P6750)) %>% ggplot(data=descript2, aes_(P6750, promedio))+
+      geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
+      xlab('Edad')+ylab('Ingreso Promedio')+theme_bw()
+    g8
     
-   
-  ##########
-  ggplot(data=base, aes(x=P6430)) + geom_bar()
-  
-  g2= ggplot(data = base, mapping = aes(x=area.x))
-  g2 + geom_histogram(binwidth = 0.5, fill="blue", colour="white") + labs(title = "Areas", x= "Personas por areas") #Esta no esta sirviendo 
-  
-  
-  ######### 
-  ggplot() + geom_bar(data=base, aes(x=ocupados))
-  h=subset(base, P6020==1)
-  m=subset(base, P6020==2)
-  ggplot() + geom_bar(data=m, aes(x=ocupados))
-  ggplot() + geom_bar(data=h, aes(x=ocupados))
-  subset(base, P6020==1) %>% ggplot() + geom_bar(data=base, aes(x=ocupados)) #me salen iguales wtf, salen diferentes como lo hice arriba
-  subset(base, P6020==2) %>% ggplot() + geom_bar(data=base, aes(x=ocupados))
-
-  
-  #Intento para categórica
-
-
-
-  ggplot(data=base, aes(x=P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
-  ggplot(data=base, aes(x=P6440)) + geom_bar()
-  
+##########################################################################################################################
   
   
   # Tomando a la media y la varianza del genero
