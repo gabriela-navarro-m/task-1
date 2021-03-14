@@ -1,12 +1,12 @@
 # Elaborado por: Gabriela Navarro (201821568), Daniela Quintero (201821754) y Maria Alejandra Saavedra (201815221)
 # Fecha de elaboracion: 01/03/21
-# Fecha ultima modificación: 
+# Fecha ultima modificacion: 13/03/21
 
 #SCRIPT TASK 1 - TALLER A 
 
 #1. VECTORES
 
-  # Vector 1 que contiene los números del 1 al 100
+  # Vector 1 que contiene los numeros del 1 al 100
   vector1 = c (1:100) 
 
   # Vector 2 que contiene numeros impares del 1 al 99
@@ -122,22 +122,22 @@
     library(ggplot2)
     g1=ggplot(data=base, aes(x= as.factor(ocupados), fill=as.factor(ocupados)))
     g1
-    ggsave(plot = g1, filename = "Grafica de Ocupados.jpeg")
+    ggsave(plot = g1, file = "views/Grafica de Ocupados.jpeg")
     
     g12=g1 + geom_bar() + scale_fill_hue(c=40) + theme(legend.position="none")+labs(title="Ocupados y Desocupados", subtitle = "2019", x="Desocupados vs. Ocupados")
     g12
-    ggsave(plot = g12, filename = "Grafica de Ocupados 2.jpeg")
+    ggsave(plot = g12, file = "views/Grafica de Ocupados 2.jpeg")
     
       
     #Gráfica edad 
     g21=ggplot(data=base, aes(x=P6040)) + geom_bar()
     g21
-    ggsave(plot = g21, filename = "Grafica de Edades.jpeg")
+    ggsave(plot = g21, file = "views/Grafica de Edades.jpeg")
     
     
     g22=base %>% filter() %>% ggplot(aes(x=P6040))+geom_density(fill="#69b3a2", color="#e9ecef", alpha=0.8)
     g22
-    ggsave(plot = g22, filename = "Distribucion de Edades.jpeg")
+    ggsave(plot = g22, file = "views/Distribucion de Edades.jpeg")
     
   
     # GRAFICA PARA OCUPADOS CON DIFERENTES VARIABLES DE AGRUPACION
@@ -146,7 +146,7 @@
       geom_bar(stat = "identity", fill="#f68060", alpha=.6, width = 0.8)+
       coord_flip()+xlab('sexo')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g3
-    ggsave(plot = g3, filename = "Grafica Ocupados por Sexo.jpeg")
+    ggsave(plot = g3, file = "views/Grafica Ocupados por Sexo.jpeg")
     
 
     #Grafica para ocupados por edad
@@ -154,7 +154,7 @@
       geom_bar(stat = "identity", fill="#f20060", alpha=.6, width = 0.8)+
       xlab('Edad')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g4
-    ggsave(plot = g4, filename = "Grafica Ocupados por Edad.jpeg")
+    ggsave(plot = g4, file = "views/Grafica Ocupados por Edad.jpeg")
     
     
     #Grafica ocupados por tipo de contrato 
@@ -162,7 +162,7 @@
       geom_bar(stat = "identity", fill="#f70060", alpha=.6, width = 0.8)+
       xlab('Tipo de Contrato')+ylab('Cantidad de Personas ocupadas')+theme_bw()
     g5
-    ggsave(plot = g5, filename = "Grafica Ocupados por Tipo de Contrato.jpeg")
+    ggsave(plot = g5, file = "views/Grafica Ocupados por Tipo de Contrato.jpeg")
     
   
     #Grafica ocupados por area
@@ -170,25 +170,25 @@
       geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8)+
       xlab('Tipo de Contrato')
     g6
-    ggsave(plot = g6, filename = "Distribucion Ocupados por areax.jpeg")
+    ggsave(plot = g6, file = "views/Distribucion Ocupados por areax.jpeg")
     
     g61= base %>% group_by(area.x) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
       geom_histogram(binwidth = 30, fill="#69b3a2", color="#e9ecef", alpha=0.9)+
       xlab('Tipo de Contrato')
     g61
-    ggsave(plot = g61, filename = "Grafica Ocupados por areax.jpeg")
+    ggsave(plot = g61, file = "views/Grafica Ocupados por areax.jpeg")
     
     g62=base %>% group_by(area.y) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
       geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8)+
       xlab('Tipo de Contrato')
     g62
-    ggsave(plot = g62, filename = "Distribucion Ocupados por areay.jpeg")
+    ggsave(plot = g62, file = "views/Distribucion Ocupados por areay.jpeg")
     
     g63=base %>% group_by(area.y) %>% summarise(total=sum(ocupados)) %>% ggplot(data=., aes(x=total))+
       geom_histogram(binwidth = 30, fill="#69b3a2", color="#e9ecef", alpha=0.9)+
       xlab('Tipo de Contrato')
     g63
-    ggsave(plot = g1, filename = "Grafica Ocupados por areay.jpeg")
+    ggsave(plot = g1, file = "views/Grafica Ocupados por areay.jpeg")
   
     # GRAFICA PARA INGRESO PROMEDIO CON DIFERENTES VARIABLES DE AGRUPACION
     #Grafica para ingresos promedio por sexo
@@ -198,117 +198,40 @@
       geom_bar(stat = "identity", fill="#f68020", alpha=.6, width = 0.8)+
       coord_flip()+xlab('sexo')+ylab('Ingreso Promedio')+theme_bw()
     g7
-    ggsave(plot = g7, filename = "Grafica de Ingreso Promedio por Sexo.jpeg")
+    ggsave(plot = g7, file = "views/Grafica de Ingreso Promedio por Sexo.jpeg")
   
     #Grafica para ingreso promedio por edad
     g8 = descript %>% group_by(P6040) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=P6040, y=promedio))+
       geom_bar(stat = "identity", fill="#f68050", alpha=.6, width = 0.8)+
       coord_flip()+xlab('Edad')+ylab('Ingreso Promedio')+theme_bw()
     g8
-    ggsave(plot = g8, filename = "Grafica de Ingreso Promedio por Edad.jpeg")
+    ggsave(plot = g8, file = "views/Grafica de Ingreso Promedio por Edad.jpeg")
     
     #Grafica para ingreso promedio por tipo de contrato 
     g9= descript %>% group_by(P6430) %>% summarize(promedio=mean(P6750)) %>% ggplot(data=., aes(x=P6430, y=promedio))+
       geom_bar(stat = "identity", fill="#f10000", alpha=.6, width = 0.8)+
       xlab('Tipo de Contrato')+ylab('Ingreso promedio')+theme_bw()
     g9 #Para el tipo de contrato 4, 5 y 9
-    ggsave(plot = g9, filename = "Grafica de Ingreso Promedio por Tipo de Contrato.jpeg")
+    ggsave(plot = g9, file = "views/Grafica de Ingreso Promedio por Tipo de Contrato.jpeg")
     
     g91= descript2 %>% group_by(P6430) %>% summarize(promedio=mean(P6500)) %>% ggplot(data=., aes(x=P6430, y=promedio))+
       geom_bar(stat = "identity", fill="#f58029", alpha=.6, width = 0.8)+
       xlab('Tipo de Contrato')+ylab('Ingreso promedio')+theme_bw()
     g91 #Para el tipo de contrato 1, 2, 3 y 8
-    ggsave(plot = g91, filename = "Grafica de Ingreso Promedio por Tipo de Contrato 2.jpeg")
+    ggsave(plot = g91, file = "views/Grafica de Ingreso Promedio por Tipo de Contrato 2.jpeg")
     
     
     #Grafica para ingreso promedio por area
     g1.0= descript %>% group_by(area.x) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=promedio))+
       geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8) + xlab('Ingreso promedio')
     g1.0
-    ggsave(plot = g1.0, filename = "Grafica de Ingreso Promedio por Areax.jpeg")
+    ggsave(plot = g1.0, file = "views/Grafica de Ingreso Promedio por Areax.jpeg")
     
     
     g1.2=descript %>% group_by(area.y) %>% summarise(promedio=mean(P6750)) %>% ggplot(data=., aes(x=promedio))+
       geom_density(fill="#59f3a2", color="#e8ecef", alpha=0.8) + xlab('Ingreso promedio')
     g1.2
-    ggsave(plot = g1.2, filename = "Grafica de Ingreso Promedio por Areay.jpeg")
-    
-    
-##########################################################################################################################
-  
-  
-  # Tomando a la media y la varianza del genero
-  summarise(base, mediana = median(P6020), variance = var(P6020))
+    ggsave(plot = g1.2, file = "views/Grafica de Ingreso Promedio por Areay.jpeg")
 
-  # El promedio de los ingresos laborales promedio por genero
-  base %>% group_by(P6020) %>% summarise(num = mean(P6750))
-  
-  # El ingreso total de las personas desocupadas
-  base %>% group_by(ocupados == 1) %>% summarise(num = mean(P6750))
-  
-  # Ingreso promedio, minimo y maximo, por genero y desocupados
-  base %>% group_by(ocupados, P6020)%>%
-    summarise (ingreso = mean(P6750), min_ingreso = min(P6750), max_ingreso = max(P6750))
-  
-  # Graficas
-  
-  # GRAFICAS DE BARRAS #
-  
-  # Grafica de barras de que muestra la cantidad de desocupados y ocupados 
-  grafica_barra1 <- ggplot() + geom_bar(data = base, aes(x = ocupados))
-  
-  # Crear variables de mujeres y hombres
-  hombres = subset(base, P6020 == 1)
-  mujeres = subset(base, P6020 == 2)
-  
-  # Grafica de barras de que muestra la cantidad de desocupados y ocupados por genero
-  grafica_barra2 <- ggplot() + geom_bar(data = mujeres, aes(x = ocupados))
-  grafica_barra3 <- ggplot() + geom_bar(data = hombres, aes(x = ocupados))
-  
-  subset(base, P6020 == 1) %>% ggplot() + geom_bar(data = base, aes(x = ocupados)) 
-  subset(base, P6020 == 2) %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
-  
-  group_by(base,P6020 == 1) %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
-  
-  grafica_barra4 <- hombres %>% ggplot() + geom_bar(data = base, aes(x = ocupados)) 
-  grafica_barra5 <- mujeres %>% ggplot() + geom_bar(data = base, aes(x = ocupados))
-  
-  # Grafica de barras de que muestra la cantidad de desocupados y ocupados por urbano rural
-  grafica_barra6 <- ggplot() + geom_bar(data = base, aes(x = ocupados))
-  grafica_barra6
-  
-  # HISTOGRAMA #
-  ingresos = subset(base, is.na(P6750) == F)
-  
-  # Histograma que muestra la distribucion de ingresos
-  grafica_histograma1 <- ggplot() + geom_histogram(data = base, aes(x = P6750))
-  grafica_histograma1
-  
-  # Histograma que muestra la distribucion de ingresos por genero
-  grafica_histograma2 <- ggplot() + geom_histogram(data = hombres, aes(x = P6750)) + xlab("Ingresos de Hombres") 
-  grafica_histograma2
-  grafica_histograma3 <-ggplot() + geom_histogram(data = mujeres, aes(x = P6750)) + xlab("Ingresos de Mujeres") 
-  
-  # Histograma muestra la distribucion de las edades
-  grafica_histograma4 <- ggplot(data=base, aes(x = P6040)) + geom_bar() #tal vez este no hacerlo con barras sino otra que no se vea tan raro
-  
-  # Histograma muestra la distribucion de los tipos de contratos
-  grafica_histograma5 <- ggplot(data=base, aes(x = P6440)) + geom_bar()
-  
-  # Para exportar graficas como JPEG se utiliza 
-  # Graficas de barra
-  ggsave(plot = grafica_barra1, file = "views/grafica_barra1.jpeg")
-  ggsave(plot = grafica_barra2, file = "views/grafica_barra2.jpeg")
-  ggsave(plot = grafica_barra3, file = "views/grafica_barra3.jpeg")
-  ggsave(plot = grafica_barra4, file = "views/grafica_barra4.jpeg")
-  ggsave(plot = grafica_barra5, file = "views/grafica_barra5.jpeg")
-  ggsave(plot = grafica_barra6, file = "views/grafica_barra6.jpeg")
-  ggsave(plot = grafica_barra7, file = "views/grafica_barra7.jpeg")
-  # Histogramas 
-  ggsave(plot = grafica_histograma1, file = "views/grafica_histograma1.jpeg")
-  ggsave(plot = grafica_histograma2, file = "views/grafica_histograma2.jpeg")
-  ggsave(plot = grafica_histograma3, file = "views/grafica_histograma3.jpeg")
-  ggsave(plot = grafica_histograma4, file = "views/grafica_histograma4.jpeg")
-  ggsave(plot = grafica_histograma5, file = "views/grafica_histograma5.jpeg")
 
 
